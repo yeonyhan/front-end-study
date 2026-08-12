@@ -7,13 +7,13 @@ let var1; // undefined
 let var2 = 10;
 let var3 = 20;
 
-// 두 값 중에 null 이나 undefined가 아닌 값이 있으면
-// 해당 값을 변수에 저장
+// null 이나 undefined인 값이 있으면
+// 아닌 값을 변수에 저장
 let var4 = var1 ?? var2; // 10
 let var5 = var1 ?? var3; // 20
 
-// 두 값 다 null 이나 undefined가 아닌 경우
-// 첫번째 값이 반환
+// null 이나 undefined인 값이 없으면
+// 첫번째 값을 변수에 저장
 let var6 = var2 ?? var3; // 10
 let var7 = var3 ?? var2; // 20
 
