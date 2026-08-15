@@ -9,8 +9,7 @@ let obj2 = {}; // 객체 리터럴 방식 (대부분 사용)
 
 // --------------------------------------------
 
-// 2. 객체 프로퍼티(속성)
-// 객체의 실질적인 정보를 담고 있음
+// 2. 객체 프로퍼티 (객체 속성)
 // key : value 로 구성
 
 // 프로퍼티 개수 제한 없음
@@ -50,41 +49,40 @@ console.log(person["age"]); //30
 // 존재하지 않는 프로퍼티 값 가져오는 경우
 console.log(person["age2"]); // undefined
 
-// 동적으로 프로퍼티를 변환하여 꺼내와야하는 경우 사용
-
+// 변수에 접근하려는 키 값을 담을 수 있음
+// -> 동적으로 프로퍼티를 변화시키면서 사용해야할 때 주로 이용
 let property = "hobby"; // 찾고싶은 항목의 이름을 적음
 let hobby = person[property];
 console.log(hobby); // 게임
 
 // --------------------------------------------
 
-// 3.2 새로운 프로퍼티를 추가하는 방법
-// 점 표기법, 괄호 표기법 그대로 사용
+// 3.2 새로운 프로퍼티를 추가
+// 존재하지 않는 프로퍼티인 경우 추가
 person.job = "홈프로텍터";
 person["favoriteFood"] = "고기";
 console.log(person);
 
 // --------------------------------------------
 
-// 3.3 프로퍼티를 수정하는 방법
+// 3.3 프로퍼티를 수정
+// 존재하는 프로퍼티인 경우 수정
 person.job = "집 경비원";
 person["favoriteFood"] = "돼지고기";
 console.log(person);
 
 // --------------------------------------------
 
-// 3.4 프로퍼티를 삭제하는 방법
-// delete 연산자를 사용
-// delete object.key
+// 3.4 프로퍼티를 삭제
+// delete 연산자
 delete person.job;
 delete person["favoriteFood"];
 console.log(person);
 
 // --------------------------------------------
 
-// 3.5 프로퍼티의 존재 유무를 확인하는 방법
-// in 연산자를 사용
-// "key" in object
+// 3.5 프로퍼티의 존재 유무를 확인
+// in 연산자
 let result1 = "name" in person;
 console.log(result1); // true
 let result2 = "cat" in person;
