@@ -56,7 +56,7 @@ function printName(person) {
 }
 
 printName(); // undefined
-printName6({ name: "한주연" }); // 한주연
+printName({ name: "한주연" }); // 한주연
 
 // person이 Falsy인 경우
 // AND 연산자에서 pesron은 Falsy 이므로 name은 Falsy
