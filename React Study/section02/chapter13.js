@@ -1,8 +1,8 @@
-// 비동기 작업 처리하기 2. Promise
-// Promise 란?
-// 비동기 작업을 효율적으로 처리할 수 있도록
-// 도와주는 자바크스크립트의 내장 객체
-// SetTimeout 함수와 같은 비동기 작업들을 랩핑(감싸는)하는 객체
+// 비동기 작업 처리하기
+// 2. Promise
+// : 비동기 작업을 효율적으로 처리할 수 있도록 도와주는 내장 객체
+// SetTimeout 함수처럼 비동기 작업들을 감싸는 객체
+// Promise 객체는 API 호출, 다른 서버 통신에 주로 사용됨
 
 // Promise의 효능
 // 비동기 작업 실행
@@ -15,8 +15,7 @@
 
 // --------------------------------------------
 
-// Promise는 비동기 작업을 진행단계에 따라 3가지로 나눔
-// 대기, 성공, 거부
+// 비동기 작업 진행단계
 
 // 1. 대기(Pending)
 // 아직 작업이 완료되지 않은 상태 (비동기 작업 진행중)
@@ -48,22 +47,19 @@ const promise = new Promise(() => {
 
 console.log(promise); // Promise 객체 표시 후 2초뒤 HI
 
-// promise 객체
-// Prototype : Promise
 // PromiseState : "pending" (객체 현재 상태 - 대기 상태)
 // PromiseResult : undefined (결과값 - 아직 대기 상태이므로)
 
 // --------------------------------------------
 
-// Promise 성공적으로 완료하기
-// Promise 콜백함수 인수에
-// 첫번쨰 인수 resolve, 두번째 인수 reject 매개변수 전달
-// 첫번째 매개변수에는 비동기 작업을 성공적 상태로 바꾸는 함수
-// 두번째 매개변수에는 비동기 작업을 실패상태로 바꾸는 함수
+// Promise 성공하기 (resolve 호출)
+// 첫번째 매개변수에 resolve, 두번째 매개변수에 reject
+// resolve : 비동기 작업을 성공상태로 바꾸는 함수
+// reject : 비동기 작업을 실패상태로 바꾸는 함수
 const promise2 = new Promise((resolve, reject) => {
   setTimeout(() => {
     console.log("HELLO"); // 호출 후 2초 뒤 HELLO 안녕
-    resolve("안녕"); // Promise 객체를 성공 상태(Fulfilled)로 변환
+    resolve("안녕"); // Promise 객체를 성공 상태로 변환
   }, 2000);
 });
 
@@ -78,8 +74,7 @@ setTimeout(() => {
 
 // --------------------------------------------
 
-// Promise 실패하기
-// 두번째 인수인 reject 호출
+// Promise 실패하기 (reject 호출)
 const promise3 = new Promise((resolve, reject) => {
   setTimeout(() => {
     console.log("HELLO");
@@ -97,7 +92,7 @@ setTimeout(() => {
 
 // --------------------------------------------
 
-// Promise 함수 이용하기
+// Promise 함수 결과값 이용하기
 const promise4 = new Promise((resolve, reject) => {
   setTimeout(() => {
     const num = 10;
@@ -110,26 +105,22 @@ const promise4 = new Promise((resolve, reject) => {
   }, 2000);
 });
 
-// then 메서드 (그 후에)
-// then 인수에 성공/실패 후 실행될 코드를 콜백함수로 넣고
-// 콜백함수 매개변수로 promise의 resolve 인수 값을 받아옴
+// 성공/실패했을때 그 후에 실행되는 코드
 
-// then 성공버전
+// 성공버전 (then)
+// 콜백함수 매개변수로 promise의 resolve 인수 값 사용 가능
 promise4.then((value) => {
-  // 2초 뒤 20
-  console.log(value);
+  console.log(value); // 2초 뒤 20
 });
 
-// then 실패버전
+// 실패버전 (catch)
+// 콜백함수 매개변수로 promise의 reject 인수 값 사용 가능
 promise4.catch((error) => {
-  // num이 숫자가 아닌 경우 "num이 숫자가 아님"
-  console.log(error);
+  console.log(error); // 2초 뒤 num이 숫자가 아님
 });
 
-// promise.then 메서드는 프로미스 객체를 그대로 반환하기 때문에
-// (promise4와 promise4.then의 전체코드 둘다 promise4 객체)
-// promise.then과 promise.catch를 따로 호출할 필요없이
-// promise.then의 끝에 .catch로 연결해서 작성해도 됨
+// promise.then 메서드는 프로미스 객체를 다시 그대로 반환
+// promise.catch를 따로 호출할 필요없이 연결해서 작성 가능
 // => Promise Chaining
 
 promise4
@@ -142,13 +133,9 @@ promise4
 
 // --------------------------------------------
 
-// 비동기 작업을 고정된 값이 아닌
-// 함수 안에서 프로미스 객체를 새로 생성하면서
-// 동적으로 매개변수로 받아서 숫자 값을 바꿔가면서 사용하도록 개선
-
-// num을 인수로 받고 promise 객체 자체를 반환
+// num을 인수로 받고 promise 객체를 반환
 function add10(num) {
-  const promise5 = new Promise(() => {
+  const promise5 = new Promise((resolve, reject) => {
     setTimeout(() => {
       if (typeof num === "number") {
         resolve(num + 10);
@@ -161,43 +148,35 @@ function add10(num) {
   return promise5;
 }
 
-// 함수 호출(인수 전달)하면
-// 함수 내부에서 새로운 프로미스 객체가 생성되면서
-// 비동기 작업이 실행되고
-// 해당하는 프로미스 객체가 반환되고 이를 변수에 할당
+// 비동기 작업의 결과를 내부에 한번 더 전달
+// 하지만 이 방법은 콜백지옥 발생
 const p = add10(0);
 p.then((result) => {
   console.log(result); // 10
 
-  // 내부에서 한번 더 함수 호출시
-  // 새로운 객체를 또 반환
   const newP = add10(result);
   newP.then((result) => {
     console.log(result); // 20
   });
 });
 
-// 하지만 위 방법은 콜백지옥으로 비효율적
-// 콜백지옥을 방지하기 위해
+// 콜백지옥 방지하는 방법
 const p2 = add10(0);
-p2.then(() => {
+p2.then((result) => {
   console.log(result);
 
-  // 내부에서 새로운 프로미스 객체 한번 더 생성
   const newP2 = add10(result);
 
-  // 아무것도 반환하지 않으면
-  // p2.then의 결과값은 원본(p2) 프로미스 객체과 동일하지만
-  // 새 프로미스 객체 newP2 를 반환하게 하면
-  // newP2가 then 메서드의 호출(p2.then)의 결과값이 됨
+  // 새 프로미스 객체를 반환하면
+  // then 메서드의 호출(p2.then)의 결과값이 됨
   return newP2;
 
-  // 따라서 반환된 newP2 값에 연결해서 then을 작성
+  // 반환된 newP2 값에 then 작성
 }).then((result) => {
   console.log(result); // 20
 });
 
-//코드를 더 간결하게
+//코드를 간결하게 개선
 const p3 = add10(0);
 p3.then((result) => {
   console.log(result); // 10
@@ -211,5 +190,5 @@ p3.then((result) => {
     console.log(result); // 30
   })
   .catch((error) => {
-    console.log(error);
+    console.log(error); // num이 숫자가 아님
   });

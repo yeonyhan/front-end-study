@@ -1,13 +1,12 @@
-// 비동기 작업 처리하기 3. Async & Await
+// 비동기 작업 처리하기
+// 3. Async & Await
 
 // async
-// 함수 앞에 붙이는 키워드
-// 어떤 함수를 비동기 함수로 만들어 줌
-// 함수가 프로미스를 반환하도록 변환해줌
+// 함수 앞에 키워드를 붙여서 비동기 함수로 변환
+// 함수가 프로미스를 반환할 수 있게됨
 
-// async 를 붙이는 경우
 // 반환값의 객체를 그대로 반환하는 함수가 아니라
-// 이 객체를 결과 값으로 갖는 새로운 프로미스를 반환하는 함수로 변환
+// 객체를 결과 값으로 갖는 새로운 프로미스를 반환하는 함수로 변환
 async function getDate() {
   return {
     name: "한주연",
@@ -24,10 +23,9 @@ console.log(getDate()); // 프로미스 객체
 
 // --------------------------------------------
 
-// async 붙은 함수가 일반적인 객체를 반환하는게 아닌
-// 애초에 프로미스를 반환하는 함수였다면
-// async 는 기능하지 않고(비동기 변환 안함)
-// 프로미스 객체 자체를 그대로 반환함
+// 만약 프로미스를 반환하는 함수에 async 사용시
+// 비동기 함수로 변환 안하고 프로미스 객체 자체를 그대로 반환함
+// => 프로미스를 반환하지 않는 함수에 async를 사용해야 기능 정상작동
 
 async function getData2() {
   return new Promise((resolve, reject) => {
@@ -49,8 +47,8 @@ console.log(getData2());
 // async는 await 키워드와 함께 사용해야 효과적
 // 비동기 함수가 다 처리되기를 기다리는 역할
 
-// 아래는 await를 사용하지 않고
-// then 메서드를 사용한 방식
+// await를 사용하지 않은 경우
+// then 메서드를 사용
 function printData() {
   // 프로미스에 담겨있는 결과 값을 사용
   getData2().then((result) => {
@@ -58,13 +56,15 @@ function printData() {
   });
 }
 
-printData();
+printData(); // {name: '한주연', id: 'on'}
 
-// await를 사용 (async 키워드 없으면 오류)
+// await를 사용하는 경우
+// async 키워드 없으면 오류 발생
 async function printData2() {
-  // getData2 함수가 반환하는 프로미스가 종료되길 기다림
+  // getData2 함수가 반환하는 프로미스가 종료되길 기다리다가
   // 종료 후 반환된 값을 변수에 할당
-  const data = await getData2;
+  const data = await getData2();
+  console.log(data);
 }
 
-printData2();
+printData2(); // {name: '한주연', id: 'on'}
