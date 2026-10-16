@@ -1,13 +1,10 @@
 // Delete - 투두 삭제하기
 
-// TodoItem 에 삭제버튼을 클릭하면 해당 아이템 삭제 기능 구현
-// onUpdate 처럼 onDelete 함수 작성하고 targetId를 전달
+// TodoItem에 삭제버튼을 클릭시 해당 아이템 삭제 기능 구현
+// onDelete 함수 작성하고 targetId를 전달 (onUpdate 함수 참고)
 
-// 기존의 todos 배열에서 targetId와 일치하는 id를 갖는
-// 요소만 삭제한 새로운 배열
-
-// todos에 fitler 메서드를 사용하여 모든 todos 배열을 순회하다가
-// todo의 id 값이 targetId와 같지않은 요소만 필터링
+// onDelete 함수
+// todo의 id 값이 targetId와 같지않은 요소(true)만 필터링
 
 ```
 // App.jsx
@@ -17,11 +14,11 @@
   };
 ```;
 
-// onUpdate와 동일하게 List 컴포넌트에 onDelete를 prop으로 전달하고
-// List에서도 prop으로 전달받아 TodoItem 컴포넌트에 prop으로 전달
-// TodoItem에서 onClickDeleteButton 이벤트핸들러 작성
-// onDelete 함수를 호출하여 인수로 id를 전달
-// button 에 onClick에 이벤트핸들러 전달
+// List(부모)로 부터 TodoItem(자식)에 props를 전달
+// onDelete를 구조분해할당에 추가
+
+// onClickDeleteButton 이벤트핸들러
+// button 클릭시 onDelete를 호출하도록 작성 (onClick 속성)
 
 ```
 import "./TodoItem.css";
