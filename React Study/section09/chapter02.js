@@ -90,6 +90,5 @@ function App() {
 export default App;
 ```;
 
-// state를 관리할 때 todos 처럼 배열 안에 객체가 들어가는 복잡한 구조는
-// useReducer를 사용하여 관리하는 것이 일반적
-// 간단한 state 관리인 경우 useState만 해도 충분
+// 배열 안에 객체가 들어가는 복잡한 state 구조 -> useReducer
+// 간단한 state 구조 -> useState
