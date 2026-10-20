@@ -1,94 +1,20 @@
-// TodoList 업그레이드
-// useState -> useReducer
+// UI 구현하기
 
-```
-import { useReducer, useRef } from "react";
-import "./App.css";
-import Editor from "./components/Editor";
-import Header from "./components/Header";
-import List from "./components/List";
+// 부모 컴포넌트 App 컴포넌트
+// 자식 컴포넌트 Header, Editor, List 컴포넌트
 
-const mockData = [
-  {
-    id: 0,
-    isDone: false,
-    content: "React 공부하기",
-    date: new Date().getTime(),
-  },
-  {
-    id: 1,
-    isDone: false,
-    content: "게임하기",
-    date: new Date().getTime(),
-  },
-  {
-    id: 2,
-    isDone: false,
-    content: "애니보기",
-    date: new Date().getTime(),
-  },
-];
+// Header.jsx
+// new Date 메서드로 오늘의 날짜 표시
+// toDateString 메서드를 호출하여
+// 문자열로 읽기 편한 형태로 데이터를 렌더링하여 출력
+// (그냥 출력시 오류 발생)
 
-function reducer(state, action) {
-  switch (action.type) {
-    case "CREATE":
-      return [action.data, ...state];
+// Editor.jsx
+// input과 button 렌더링
 
-    case "UPDATE":
-      return state.map((item) =>
-        item.id === action.targetId ? { ...item, isDone: !item.isDone } : item,
-      );
+// List.jsx
+// 하나의 아이템(TodoItem 컴포넌트)을 작성
+// props를 바꿔가면 반복적으로 렌더링
 
-    case "DELETE":
-      return state.filter((item) => item.id !== action.targetId);
-
-    default:
-      return state;
-  }
-}
-
-function App() {
-  // const [todos, setTodos] = useState(mockData);
-  const [todos, dispatch] = useReducer(reducer, mockData);
-  const idRef = useRef(3);
-
-  const onCreate = (content) => {
-    dispatch({
-      type: "CREATE",
-      data: {
-        id: idRef.current++,
-        isDone: false,
-        content: content,
-        date: new Date().getTime(),
-      },
-    });
-  };
-
-  const onUpdate = (targetId) => {
-    dispatch({
-      type: "UPDATE",
-      targetId,
-    });
-  };
-
-  const onDelete = (targetId) => {
-    dispatch({
-      type: "DELETE",
-      targetId,
-    });
-  };
-
-  return (
-    <div className="App">
-      <Header />
-      <Editor onCreate={onCreate} />
-      <List onUpdate={onUpdate} onDelete={onDelete} todos={todos} />
-    </div>
-  );
-}
-
-export default App;
-```;
-
-// 배열 안에 객체가 들어가는 복잡한 state 구조 -> useReducer
-// 간단한 state 구조 -> useState
+// TodoItem.jsx
+// 체크박스, 이름, 날짜, 삭제 버튼으로 구성

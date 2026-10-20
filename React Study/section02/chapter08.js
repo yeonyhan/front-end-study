@@ -1,110 +1,51 @@
-// 배열 메서드 2. 순회와 탐색
-// 5가지의 요소 순회 및 탐색 메서드
+// 특수한 연산자들
+
+// 1. null 병합 연산자
+// 존재하는 값을 추려내는 기능
+// null, undefined가 아닌 값을 찾아내는 연산자
+let var1; // undefined
+let var2 = 10;
+let var3 = 20;
+
+// null 이나 undefined인 값이 있으면
+// 아닌 값을 변수에 저장
+let var4 = var1 ?? var2; // 10
+let var5 = var1 ?? var3; // 20
+
+// null 이나 undefined인 값이 없으면
+// 첫번째 값을 변수에 저장
+let var6 = var2 ?? var3; // 10
+let var7 = var3 ?? var2; // 20
+
+// 실무에서 사용시 (회원가입의 경우)
+// userName이 없다면 userNickName으로 저장하라.
+let userName = "한주연";
+let userNickName = "on";
+
+let displayName = userName ?? userNickName;
 
 // --------------------------------------------
 
-// 1. forEach (순회)
-// 모든 요소를 순회하면서,
-// 각각의 요소에 특정 동작을 수행시키는 메서드
+// 2. typeof 연산자
+// 값을 타입을 문자열로 반환
+// 자바스크립트는 변수의 타입이 고정되어 있지 않음
+// 현재 저장된 변수의 타입의 궁금한 경우
+let var8 = 1;
+var8 = "hello";
 
-let arr1 = [1, 2, 3];
-
-// 배열의 길이만큼 반복하면서 콜백함수를 수행
-// 콜백함수 인수 (요소, 인덱스, 배열)
-arr1.forEach((item, idx, arr) => {
-  console.log(idx, item);
-});
-// 0 1
-// 1 2
-// 2 3
-
-// 배열의 모든 요소에 곱하기 2를 하여 새 배열에 넣고싶다면
-// forEach, 화살표함수, push 메서드 활용
-let doubledArr = [];
-arr1.forEach((item) => {
-  doubledArr.push(item * 2);
-});
-
-console.log(doubledArr); // [2, 4, 6]
+let t1 = typeof var8;
+console.log(t1); // string
 
 // --------------------------------------------
 
-// 2. includes (탐색)
-// 배열에 특정 요소가 있는 확인하는 메서드
+// 3. 삼항 연산자
+// 항을 3개 사용
+// 조건식을 이용하여 참, 거짓일 때의 값을 다르게 반환
+// :(콜론)을 기준으로 ? 왼쪽의 식의 참 거짓을 판단하여
+// 왼쪽이 참일때 결과 값, 오른쪽이 거짓일 때 결과 값
+let var9 = 10;
 
-// 배열에 3이라는 값이 있는지 확인하고 싶다면
-let arr2 = [1, 2, 3];
-let isIncludes = arr2.includes(3);
-
-console.log(isIncludes); // true
-
-// 존재하지 않는 값을 찾으려고 하면
-isIncludes = arr2.includes(10);
-
-console.log(isIncludes); // false
-
-// --------------------------------------------
-
-// 3. indexOf (탐색)
-// 특정 요소의 인덱스(위치)를 찾아내서 반환하는 메서드
-
-// 배열에서 2라는 값의 인덱스를 찾고싶다면
-let arr3 = [1, 2, 3];
-
-let index = arr3.indexOf(2);
-console.log(index); // 1
-
-// 배열에 찾으려는 값이 여러개 존재한다면
-// 가장 첫번째로 찾아낸 요소의 인덱스를 반환
-arr3 = [2, 2, 2];
-
-index = arr3.indexOf(2);
-console.log(index); // 0
-
-// 존재하지 않는 값의 인덱스를 찾으려고 하면
-index = arr3.indexOf(3);
-console.log(index); // -1
-
-// --------------------------------------------
-
-// 4. findIndex (탐색)
-// 모든 요소를 순회하면서, 콜백함수를 만족하는
-// 특정 요소의 인덱스(위치)를 반환하는 메서드
-
-// 콜백함수는 참/거짓을 판단하여 참인 요소의 인덱스 반환
-let arr4 = [1, 2, 3];
-
-const findIndex2 = arr4.findIndex((item) => {
-  if (item === 2) return true;
-});
-
-console.log(findIndex2); // 1
-
-// findIndex 가 존재하는 이유 ?
-// 비슷한 메서드인 indexOf 의 경우
-// 객체 타입의 값들이 저장된 배열에서는
-// 정확한 요소의 위치를 찾아낼 수 없기 때문
-
-// name이 "한주연"인 객체의 값의 위치를 찾고싶은 경우
-let objectArr = [{ name: "한주연" }, { name: "이준환" }];
-
-// indexOf의 경우 찾지 못함
-console.log(objectArr.indexOf({ name: "한주연" })); // -1
-
-// indexOf는 얕은 비교로 동작하기 때문
-// findIndex를 이용한다면 깊은 비교가 가능
-console.log(objectArr.findIndex((item) => item.name === "한주연")); // 0
-
-// --------------------------------------------
-
-// 5. find 메서드 (탐색)
-// 모든 요소를 순회하면서 콜백함수를 만족하는 요소를 반환
-// findIndex 는 인덱스를 반환
-
-let arr5 = [{ name: "한주연" }, { name: "이준환" }];
-
-// 콜백함수를 전달하여 조건식에 참인 요소를 반환
-const findItem = arr5.find((item) => item.name === "한주연");
-
-// 첫번째로 찾은 요소(객체) 자체가 반환
-console.log(findItem); // {name: "한주연"}
+// 요구사항 : 변수 res에 var9의 값이
+// 짝수면 "짝"으로 저장, 홀수면 "홀"로 저장
+let res = var9 % 2 === 0 ? "짝" : "홀";
+console.log(res); // 짝

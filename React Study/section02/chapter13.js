@@ -1,194 +1,85 @@
-// 비동기 작업 처리하기
-// 2. Promise
-// : 비동기 작업을 효율적으로 처리할 수 있도록 도와주는 내장 객체
-// SetTimeout 함수처럼 비동기 작업들을 감싸는 객체
-// Promise 객체는 API 호출, 다른 서버 통신에 주로 사용됨
+// 1. 콜백함수
+// 함수도 값으로 취급되므로
+// 함수 자체를 다른 함수의 인수로 전달하는게 가능
 
-// Promise의 효능
-// 비동기 작업 실행
-// 비동기 작업 상태 관리
-// 비동기 작업 결과 저장
-// 비동기 작업 병렬 실행
-// 비동기 작업 다시 실행
+// 콜백함수란?
+// 자신이 아닌 다른 함수에, 인수로써 전달된 함수
 
-// 가장 대표적인 기능 (실행, 상태관리, 결과 저장)
+// callback : 뒷전에, 나중에 실행된다는 의미
+// 콜백함수는 당장 실행되는 것이 아닌
+// 다른 함수가 실행될 때 원하는 타이밍에 실행
 
-// --------------------------------------------
-
-// 비동기 작업 진행단계
-
-// 1. 대기(Pending)
-// 아직 작업이 완료되지 않은 상태 (비동기 작업 진행중)
-
-// 2. 성공 (Fulfilled)
-// 비동기 작업이 성공적으로 마무리된 상태
-
-// 3. 실패 (Rejected)
-// 비동기 작업이 실패한 상태 (네트워크 오류, 코드 오류 등)
-
-// 해결(resolve)
-// 대기 상태 -> 성공 상태
-
-// 거부 (reject)
-// 대기 상태 -> 실패 상태
-
-// --------------------------------------------
-
-// 생성자를 이용하여 promise 생성
-// 생성자의 인수로 비동기 작업을 진행할 콜백함수를 입력
-const promise = new Promise(() => {
-  // 비동기 작업을 실행하는 함수
-  // executor (집행자) 함수
-
-  setTimeout(() => {
-    console.log("HI");
-  }, 2000);
-});
-
-console.log(promise); // Promise 객체 표시 후 2초뒤 HI
-
-// PromiseState : "pending" (객체 현재 상태 - 대기 상태)
-// PromiseResult : undefined (결과값 - 아직 대기 상태이므로)
-
-// --------------------------------------------
-
-// Promise 성공하기 (resolve 호출)
-// 첫번째 매개변수에 resolve, 두번째 매개변수에 reject
-// resolve : 비동기 작업을 성공상태로 바꾸는 함수
-// reject : 비동기 작업을 실패상태로 바꾸는 함수
-const promise2 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    console.log("HELLO"); // 호출 후 2초 뒤 HELLO 안녕
-    resolve("안녕"); // Promise 객체를 성공 상태로 변환
-  }, 2000);
-});
-
-setTimeout(() => {
-  // 호출 후 3초 뒤 promise2 객체 (HELLO 안녕과 1초 차이)
-  console.log(promise2);
-}, 3000);
-
-// promise2 객체
-// PromiseState : "fulfilled" (객체 현재 상태 - 성공 상태)
-// PromiseResult : "안녕" (결과값 - resolve 함수에 인수로 전달된 값)
-
-// --------------------------------------------
-
-// Promise 실패하기 (reject 호출)
-const promise3 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    console.log("HELLO");
-    reject("오류난 이유"); // 에러 콘솔
-  }, 2000);
-});
-
-setTimeout(() => {
-  console.log(promise3);
-}, 3000);
-
-// promise3 객체
-// PromiseState : "rejected" (객체 현재 상태 - 실패 상태)
-// PromiseResult : "오류난 이유" (결과값 - resolve 함수에 인수로 전달된 값)
-
-// --------------------------------------------
-
-// Promise 함수 결과값 이용하기
-const promise4 = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    const num = 10;
-
-    if (typeof num === "number") {
-      resolve(num + 10);
-    } else {
-      reject("num이 숫자가 아님");
-    }
-  }, 2000);
-});
-
-// 성공/실패했을때 그 후에 실행되는 코드
-
-// 성공버전 (then)
-// 콜백함수 매개변수로 promise의 resolve 인수 값 사용 가능
-promise4.then((value) => {
-  console.log(value); // 2초 뒤 20
-});
-
-// 실패버전 (catch)
-// 콜백함수 매개변수로 promise의 reject 인수 값 사용 가능
-promise4.catch((error) => {
-  console.log(error); // 2초 뒤 num이 숫자가 아님
-});
-
-// promise.then 메서드는 프로미스 객체를 다시 그대로 반환
-// promise.catch를 따로 호출할 필요없이 연결해서 작성 가능
-// => Promise Chaining
-
-promise4
-  .then((value) => {
-    console.log(value);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
-// --------------------------------------------
-
-// num을 인수로 받고 promise 객체를 반환
-function add10(num) {
-  const promise5 = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (typeof num === "number") {
-        resolve(num + 10);
-      } else {
-        reject("num이 숫자가 아님");
-      }
-    }, 2000);
-  });
-
-  return promise5;
+function main(value) {
+  console.log("start");
+  value(); // 매개변수를 함수 안에서 호출 가능
+  console.log("end");
 }
 
-// 비동기 작업의 결과를 내부에 한번 더 전달
-// 하지만 이 방법은 콜백지옥 발생
-const p = add10(0);
-p.then((result) => {
-  console.log(result); // 10
+// sub 함수
+function sub() {
+  console.log("sub 호출");
+}
 
-  const newP = add10(result);
-  newP.then((result) => {
-    console.log(result); // 20
-  });
+// sub 함수를 main 함수에 인수로 전달
+// sub 함수는 콜백함수
+main(sub); // sub 호출
+
+// --------------------------------------------
+
+// 선언문 자체를 안에 넣어서 사용 가능
+main(function () {
+  console.log("i am sub");
 });
 
-// 콜백지옥 방지하는 방법
-const p2 = add10(0);
-p2.then((result) => {
-  console.log(result);
-
-  const newP2 = add10(result);
-
-  // 새 프로미스 객체를 반환하면
-  // then 메서드의 호출(p2.then)의 결과값이 됨
-  return newP2;
-
-  // 반환된 newP2 값에 then 작성
-}).then((result) => {
-  console.log(result); // 20
+// 화살표 함수
+main(() => {
+  console.log("i am sub2");
 });
 
-//코드를 간결하게 개선
-const p3 = add10(0);
-p3.then((result) => {
-  console.log(result); // 10
-  return add10(result);
-})
-  .then((result) => {
-    console.log(result); // 20
-    return add10(result);
-  })
-  .then((result) => {
-    console.log(result); // 30
-  })
-  .catch((error) => {
-    console.log(error); // num이 숫자가 아님
-  });
+// --------------------------------------------
+
+// 2. 콜백함수의 활용
+// 1부터 인수까지 출력하는 repeat 함수
+function repeat(count) {
+  for (let idx = 1; idx <= count; idx++) {
+    console.log(idx);
+  }
+}
+
+repeat(5); // 1 2 3 4 5
+
+// 구조가 거의 동일한 함수
+// 2의 배수를 출력하는 repeatDouble 함수
+function repeatDouble(count) {
+  for (let idx = 1; idx <= count; idx++) {
+    console.log(idx * 2);
+  }
+}
+
+repeatDouble(5); // 2 4 6 8 10
+
+// 구조가 거의 동일한 함수의 경우
+// 콜백함수를 이용하여 중복코드 줄이기
+
+// 인수로 콜백함수를 전달
+// 콜백함수를 호출하고 인수로 idx를 넘김
+function repeat2(count, callback) {
+  for (let idx = 1; idx <= count; idx++) {
+    callback(idx);
+  }
+}
+
+// 콜백함수를 인수로 넘김
+repeat2(5, function (idx) {
+  console.log(idx);
+}); // 1 2 3 4 5
+
+// 콜백함수만 수정해서 유사한 기능을 수행
+repeat2(5, function (idx) {
+  console.log(idx * 2);
+}); // 2 4 6 8 10
+
+// 화살표함수
+repeat2(5, (idx) => {
+  console.log(idx);
+}); // 1 2 3 4 5

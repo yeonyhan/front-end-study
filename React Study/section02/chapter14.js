@@ -1,70 +1,56 @@
-// 비동기 작업 처리하기
-// 3. Async & Await
-
-// async
-// 함수 앞에 키워드를 붙여서 비동기 함수로 변환
-// 함수가 프로미스를 반환할 수 있게됨
-
-// 반환값의 객체를 그대로 반환하는 함수가 아니라
-// 객체를 결과 값으로 갖는 새로운 프로미스를 반환하는 함수로 변환
-async function getDate() {
-  return {
-    name: "한주연",
-    id: "on",
-  };
-}
-
-console.log(getDate()); // 프로미스 객체
-
-// PromiseState : "fulfilled"
-// PromiseResult : Object
-// id: "on"
-// name : "한주연"
+// 스코프 Scope = 범위
+// 변수나 함수에 접근하거나 호출할 수 있는 범위
 
 // --------------------------------------------
 
-// 만약 프로미스를 반환하는 함수에 async 사용시
-// 비동기 함수로 변환 안하고 프로미스 객체 자체를 그대로 반환함
-// => 프로미스를 반환하지 않는 함수에 async를 사용해야 기능 정상작동
+// 전역(전체 영역) 스코프
+// : 전체 영역에서 접근이 가능
 
-async function getData2() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        name: "한주연",
-        id: "on",
-      });
-    }, 1500);
-  });
-}
-
-console.log(getData2());
+// 지역(특정 영역) 스코프
+// : 특정 영역에서만 접근이 가능
 
 // --------------------------------------------
 
-// await
-// async 내부에서만 사용 가능한 키워드
-// async는 await 키워드와 함께 사용해야 효과적
-// 비동기 함수가 다 처리되기를 기다리는 역할
+// 전역 스코프
 
-// await를 사용하지 않은 경우
-// then 메서드를 사용
-function printData() {
-  // 프로미스에 담겨있는 결과 값을 사용
-  getData2().then((result) => {
-    console.log(result);
-  });
+// 함수, 반복문, 조건문에 갇히지 않은 상태
+// 완전히 바깥 위치에서 변수를 선언
+// 어디에서나 접근이 가능
+let a = 1; // 전역 스코프
+
+// 함수
+function funcA() {
+  // 블록 내부에 선언
+  // 특정 영역 안에서만 변수에 접근 가능
+  let b = 2; // 지역 스코프
+  console.log(b);
+  // console.log(a); // 오류 발생
+
+  // 중첩함수도 지역 스코프
+  function funcB() {
+    console.log("funcB 호출");
+  }
 }
 
-printData(); // {name: '한주연', id: 'on'}
+console.log(a); // 1
+funcA(); // 2
+// console.log(b); // 오류 발생
+// funcB(); // 오류 발생
 
-// await를 사용하는 경우
-// async 키워드 없으면 오류 발생
-async function printData2() {
-  // getData2 함수가 반환하는 프로미스가 종료되길 기다리다가
-  // 종료 후 반환된 값을 변수에 할당
-  const data = await getData2();
-  console.log(data);
+// 조건문
+if (true) {
+  // 블록 내부에 선언
+  let c = 1; // 지역스코프
 }
 
-printData2(); // {name: '한주연', id: 'on'}
+// console.log(c); // 오류 발생
+
+// 반복문
+for (let i = 0; i < 5; i++) {
+  // 블록 내부에 선언
+  let d = 1;
+}
+
+// console.log(d); // 오류 발생
+// 반복문의 초기식에 선언된 변수도 접근 불가능
+// console.log(i); // 오류 발생

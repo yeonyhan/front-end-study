@@ -1,74 +1,68 @@
-// 비동기 작업 처리하기
-// 1. 콜백함수
-function task() {
-  setTimeout(() => {
-    console.log("HI");
-  }, 3000);
-}
-
-task(); // 호출 3초뒤 HI
+// 함수 표현식과 화살표 함수
 
 // --------------------------------------------
 
-// 비동기함수의 결과값을 외부에서 추가 처리
-
-function add(a, b, callback) {
-  // 3초 뒤에 실행되는 코드
-  setTimeout(() => {
-    const sum = a + b;
-
-    // 콜백함수 인수로 비동기 처리값을 전달
-    callback(sum);
-  }, 3000);
+// 함수 선언
+function funcA() {
+  console.log("funcA 호출");
 }
 
-// 함수를 호출할때 콜백함수를 함께 전달
-add(1, 2, (value) => {
-  console.log(value); // 3초뒤 3
-});
+// 함수 자체를 변수에 할당
+let varA = funcA;
+console.log(varA); // 함수 자체가 출력됨
+
+// 함수를 변수 이름으로 호출할 수 있음
+varA(); // funcA 호출
+
+// 함수를 선언과 동시에 변수에 할당할 경우
+// 즉, 값으로써 함수를 생성한 경우
+// 해당 함수 이름(funcB)으로 호출 불가능
+let varB = function funcB() {
+  console.log("funcB 호출");
+};
+
+varB(); // funcB 호출 (변수로 호출)
+// funcB(); // 오류 발생 (함수로 호출 불가능)
+
+// 어짜피 함수 이름이 사용 불가능하므로
+// 함수 생성시 함수 이름을 생략
+// 이름없는 함수는 익명함수
+let varBB = function () {
+  console.log("funcBB 호출");
+};
+
+// 정리
+// 함수 선언문을 이용해서 함수 생성 (funcA)
+// -> 함수 선언문
+
+// 변수에 할당하기 위해 값으로써 함수 생성 (funcB)
+// -> 함수 표현식
+
+// 함수 표현식은 값으로써 취급되기 때문에
+// 호이스팅의 대상이 되지 않음
 
 // --------------------------------------------
 
-// 음식을 주문하는 상황
-function orderFood(callback) {
-  setTimeout(() => {
-    const food = "떡볶이";
+// 화살표 함수
+// 함수를 이전보다 더 빠르고 간결하게 생성
 
-    callback(food);
-  }, 3000);
-}
+// 함수 표현식을 화살표 함수로 (function 생략)
+let varC = () => {
+  return 1;
+};
+console.log(varC()); // 1
 
-// 음식을 식히는 함수
-function cooldownFood(food, callback) {
-  setTimeout(() => {
-    const cooldownedFood = `식은 ${food}`;
-    callback(cooldownedFood);
-  }, 2000);
-}
+// 값을 반환하기만 하는 경우 (return 생략)
+let varCC = () => 1;
+console.log(varCC()); // 1
 
-// 음식을 냉동하는 함수
-function freezeFood(food, callback) {
-  setTimeout(() => {
-    const freezedFood = `냉동된 ${food}`;
-    callback(freezedFood);
-  }, 1500);
-}
+// 매개변수가 필요한 경우 (소괄호 사용)
+let varCCC = (value) => value + 1;
+console.log(varCCC(1)); // 2
 
-orderFood((food) => {
-  console.log(food); // 3초뒤 떡볶이
-
-  // 비동기 작업의 결과를 또 다른 비동기 작업의 인수로 전달
-  cooldownFood(food, (cooldownedFood) => {
-    console.log(cooldownedFood); // 2초뒤 식은 떡볶이
-
-    freezeFood(cooldownedFood, (freezedFood) => {
-      console.log(freezedFood); // 1.5초뒤 냉동된 떡볶이
-    });
-  });
-});
-
-// 콜백함수를 이용해서 받아온 비동기 작업의 결과를
-// 또 다른 비동기 작업의 인수로 넣어주는 코드가 반복되면
-// 콜백함수 안에서 계속 함수를 호출하는 인덴트(들여쓰기)가 점점 깊어지는 형태
-// => 콜백지옥
-// 기능이 늘어날수록 가독성이 안좋아짐
+// 추가적인 작업이 필요한 경우 (중괄호 사용)
+let varCCCC = (value) => {
+  console.log(value);
+  return value + 1;
+};
+console.log(varCCCC(1)); // 1 2

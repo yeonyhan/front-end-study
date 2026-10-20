@@ -1,106 +1,48 @@
-// 순회(Iteration)
-// 배열, 객체에 저장된 여러개의 값에 순서대로 하나씩 접근
+// 형 변환 (Type Casting)
+// 어떤 값의 타입을 다른 타입으로 변경하는 것
+// 예를 들어 Number Type -> String Type 으로 바꿈
 
-// 1 배열 순회
-let arr = [1, 2, 3];
+// 1. 암묵적 형 변환 (묵시적 형변환)
+// 개발자가 직접 설정하지 않아도 자바스크립트 엔진이 알아서 형 변환
 
-// 1-1. for 반복문으로 인덱스 순회
-for (let i = 0; i < arr.length; i++) {
-  console.log(arr[i]);
-}
-// 1
-// 2
-// 3
-
-// length 프로퍼티
-// 모든 배열이 다 가지고 있는 기본적인 프로퍼티
-// 배열의 길이를 저장
-
-// arr 인덱스는 0부터 2까지 있으며,
-// arr의 요소가 3개이므로 arr.length = 3
-// arr[0], arr[1], arr[2] 순차적으로 출력
+// 2. 명시적 형 변환
+// 개발자가 직접 함수 등을 이용해 형 변환
 
 // --------------------------------------------
 
-// 1.2 for of 반복문으로 순회
-// 오직 배열을 위한 순회 반복문
-// of 뒤에 있는 배열(arr)의 값을 하나씩 순차적으로 변수(item)에 저장
-for (let item of arr) {
-  console.log(item);
-}
-// 1
-// 2
-// 3
+// 1. 암묵적 형 변환
+// -> 자바스크립트 엔진이 알아서 자동으로 형 변환
+let num = 10;
+let str = "20";
 
-// for 반복문 : 내부에서 인덱스를 통한 활동 가능
-// for of 반복문 : 배열 안 값을 순서대로 순회만 함
+const result = num + str;
+console.log(result); // 1020
+// 숫자 + 문자와 처럼 불가능한 연산 발생시 숫자를 문자로 암묵적 형 변환
+// 모든 불가능한 연산에 형 변환이 일어나는 것이 아니라
+// 정상적인 결과가 나오는 특정 경우에만 발생 (그 외는 NaN)
 
 // --------------------------------------------
 
-// 2. 객체 순회
-let person = {
-  name: "한주연",
-  age: 30,
-  hobby: "게임",
-};
+// 2. 명시적 형 변환
+// -> 내장 함수를 이용하여 직접 형 변환을 명시
+// 내장함수 : 자바스크립트가 기본적으로 제공하는 함수
 
-// 2.1 Object.keys 내장함수
-// 객체에서 key 값들만 뽑아서 새로운 배열로 반환
-let keys = Object.keys(person);
-console.log(keys); // [name, age, hobby]
+// 문자열 -> 숫자
+let str1 = "10";
+let strToNum1 = Number(str1);
+console.log(10 + strToNum1); // 20
 
-// 뽑아낸 key 배열을 for 반복문으로 순회
-for (let i = 0; i < keys.length; i++) {
-  console.log(keys[i]);
-}
-// name
-// age
-// hobby
+// 문자 값이 포함된 경우 Number 내장함수로 형 변환시 NaN
+let str2 = "10개";
+let strToNum2 = Number(str2);
+console.log(strToNum2); // NaN
 
-// 또는 for...of로 순회
-// 괄호표기법으로 객체의 value값도 동시 순회 가능
-for (let key of keys) {
-  const value = person[key];
-  console.log(key, value);
-}
-// name 한주연
-// age 30
-// hobby 게임
+// parseInt 내장함수를 사용하여 숫자만 추출하여 형 변환
+// 이 때 숫자가 앞에 있어야 오류가 나지 않음
+let strToNum3 = parseInt(str2);
+console.log(strToNum3); // 10
 
-// --------------------------------------------
-
-// 2.2 Object.values 사용
-// 객체에서 value 값들만 뽑아서 새로운 배열로 반환
-let values = Object.values(person);
-console.log(values); // [한주연, 30, 게임]
-
-// for...of 반복문으로 순회
-for (let value of values) {
-  console.log(value);
-}
-// 한주연
-// 30
-// 게임
-
-// --------------------------------------------
-
-// 2.3 for in 사용
-// 오직 객체를 위한 순회 반복문
-// in 뒤에 있는 객체(person)의 key값 순차적으로 변수(key)에 저장
-// 괄호표기법으로 key, value 값을 동시 순회
-for (let key in person) {
-  const value = person[key];
-  console.log(key, value);
-  console.log(key);
-  console.log(value);
-}
-// name 한주연
-// age 30
-// hobby 게임
-
-// --------------------------------------------
-
-// 주의할 점
-// for...in은 객체를 순회할때만 사용
-// for...of는 배열을 순회할때만 사용
-// 둘 다 새로운 배열을 반환
+// 숫자 -> 문자열
+let num1 = 20;
+let numToStr1 = String(num1);
+console.log(numToStr1 + "입니다"); // "20입니다"

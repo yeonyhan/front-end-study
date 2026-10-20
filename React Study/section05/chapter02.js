@@ -1,38 +1,51 @@
-// React 컴포넌트
+// 첫 React App 생성하기
 
-// 컴포넌트(Component) 란?
-// html 태그들을 리턴하는 함수
-// App 함수면 -> App 컴포넌트라 부름
-// 함수 선언식, 화살표 함수 등으로 선언
-// 새로운 컴포넌트 생성시 함수의 이름의 첫글자를 대문자로 짓기
+// React Application : React로 만든 웹 서비스
+// 리액트로 만들어진 대다수의 웹서비스들은
+// 웹 페이지의 기능을 넘어서 매우 다양한 기능을 제공
+
+// React App 생성하기
+// npm에 등록된 자바스크립트 라이브러리이므로
+// 1. Node.js 패키지 생성
+// 2. React 라이브러리 설치
+// 3. 기타 도구 설치 및 설정
+
+// Vite 라는 차세대 프론트엔드 개발 툴을 사용하여
+// 기본 설정이 적용된 React App을 한방에 생성
+// 리액트 공식문서에서도 권장되는 방법
 
 // --------------------------------------------
 
-// App.jsx 처럼 모든 컴포넌트의 뿌리역할 = '루트 컴포넌트'
-// 리턴문 내부에 포함된 다른 컴포넌트 = '자식 컴포넌트'
+// npm create vite@latest
+// javascript 로 설정
+// 오류 나는 경우 node, npm 버전 확인 및 폴더명 영문으로 수정
 
-// 루트 컴포넌트는 main.jsx 파일에서
-// render 메서드의 인수로써 전달되는 컴포넌트
-// 관례상 루트 컴포넌트는 App 컴포넌트로 설정
+// package.json
+// 이름, 버전, 타입, 스크립트, 라이브러리, 개발용 라이브러리 정보
+// npm i 로 패키지 내용 설치 -> node_modules 폴더 자동 생성
 
-// --------------------------------------------
+// public 폴더
+// svg, png, jpg 이미지 파일, 폰트, 동영상을 저장
+// 정적인 파일을 보관하는 폴더
 
-// 컴포넌트들을 각각의 파일로 분리하여 모듈화
-```
-import "./App.css";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Main from "./components/Main";
+// src 폴더
+// 리액트, 자바스크립트 코드들을 보관
+// .jsx 확장자는 리액트 코드를 작성하는 공간
+// src > assets 폴더
+// src 폴더 내에서 정적인 파일을 보관하는 폴더
 
-function App() {
-  return (
-    <>
-      <Header />
-      <Main />
-      <Footer />
-    </>
-  );
-}
+// .eslint.cjs
+// 개발자 사이에 코드 스타일을 통일하는데 도움을 주는 도구
 
-export default App;
-```;
+// .gitignore
+// 깃허브에 업로드할 때 올리면 안되는 파일
+
+// index.html
+// 리액트 앱의 기본 틀 역할을 하는 파일
+// index.html 에 jsx 컴포넌트를 불러와서 사용
+
+// vite.config.js
+// vite 도구의 옵션 설정 파일
+
+// 리액트 앱 실행
+// npm run dev : 개발용으로 앱을 실행
